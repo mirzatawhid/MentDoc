@@ -20,6 +20,7 @@
         android:id="@+id/email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="20sp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:fontFamily="@font/montserrat"
@@ -33,6 +34,7 @@
         android:id="@+id/uname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="20sp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:fontFamily="@font/montserrat"
@@ -46,6 +48,7 @@
         android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="20sp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:fontFamily="@font/montserrat"
@@ -59,6 +62,7 @@
         android:id="@+id/conpassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="20sp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:fontFamily="@font/montserrat"
@@ -76,20 +80,25 @@
         android:layout_marginEnd="20dp"
         android:fontFamily="@font/montserrat"
         android:hint="Age"
+        android:textSize="20sp"
         android:inputType="text"
         android:maxLines="1"
         android:paddingStart="20dp"
         android:paddingEnd="0dp" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
+        android:id="@+id/btnReg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
-        android:background="#FFA000"
         android:fontFamily="@font/montserrat_medium"
-        android:text="Register Now" />
+        android:text="Register Now"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:backgroundTint="#FFA000" />
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -103,9 +112,11 @@
             android:text="Already have an account?"
             android:textStyle="bold"
             />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="GoToLogin"
             android:text="Login Now"
             android:textStyle="bold" />
 
