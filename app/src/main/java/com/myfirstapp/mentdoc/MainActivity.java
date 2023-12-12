@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
     FirebaseAuth mAuth;
 
-    LinearLayout btnLogout,btnChildTrack,btnTeenTrack;
+    LinearLayout btnLogout,btnChildTrack,btnTeenTrack,btnAdultTrack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         btnLogout =findViewById(R.id.logout_id);
         btnChildTrack = findViewById(R.id.child_track_id);
         btnTeenTrack = findViewById(R.id.teenage_track_id);
+        btnAdultTrack = findViewById(R.id.btn_track_adult);
 
         btnChildTrack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,6 +45,16 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(),QuesAnsActivity.class);
                 intent.putExtra("category","QuesUnder18");
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        btnAdultTrack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),QuesAnsActivity.class);
+                intent.putExtra("category","QuesAdult");
                 startActivity(intent);
                 finish();
             }
