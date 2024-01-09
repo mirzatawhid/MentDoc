@@ -14,7 +14,6 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:id="@+id/nav_view"
-        app:headerLayout="@layout/header"
         app:menu="@menu/main_menu"
         android:layout_gravity="start"/>
 
@@ -85,7 +84,8 @@
                     android:layout_height="100dp"
                     android:layout_margin="10dp"
                     android:background="@drawable/background_category_1"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:onClick="GoToTracking">
 
                     <ImageView
                         android:id="@+id/imageView_tracking"

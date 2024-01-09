@@ -48,4 +48,10 @@ public class ResultActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+    public void ReferDoctor(View view) {
+        Intent intent = new Intent(getApplicationContext(),DocAllActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

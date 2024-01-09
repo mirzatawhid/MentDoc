@@ -1,6 +1,7 @@
 package com.myfirstapp.mentdoc;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -16,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
@@ -25,6 +27,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.ArrayList;
 
@@ -33,6 +40,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
+
+    TextView navName;
 
     Button btn;
 
@@ -45,6 +54,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     ValueEventListener eventListener;
 
+    FirebaseFirestore firestore;
+    String userId;
+    int age;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +66,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         mAuth = FirebaseAuth.getInstance();
 
+
         drawerLayout = findViewById(R.id.drawerlayout);
         navigationView = findViewById(R.id.nav_view);
+        View hView = navigationView.inflateHeaderView(R.layout.header);
+        navName = hView.findViewById(R.id.nav_name);
         toolbar = findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
@@ -78,7 +94,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         docAdapter = new DocAdapter(MainActivity.this, docList);
         recyclerView.setAdapter(docAdapter);
 
+        //for tracking
+        userId = mAuth.getCurrentUser().getUid();
+        Log.d("userid", "onCreate: uid = "+userId);
 
+        firestore = FirebaseFirestore.getInstance();
+
+        DocumentReference documentReference = firestore.collection("users").document(userId);
+
+        Log.d("checkingflow", "onCreate: before");
+        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                navName.setText(documentSnapshot.getString("full_name"));
+                age = Integer.parseInt(documentSnapshot.getString("age"));
+
+            }
+        });
+
+
+        //for top doctor list
         DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://mentdoc-da69c-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
         eventListener = databaseReference.addValueEventListener(new ValueEventListener() {
             // Inside onDataChange method
@@ -183,6 +218,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void FullDocList(View view) {
         Intent intent = new Intent(getApplicationContext(),DocAllActivity.class);
+        startActivity(intent);
+    }
+
+    public void GoToTracking(View view) {
+        String category;
+        if(age <13){
+            category = "QuesChild";
+        } else if (age>12 && age<20) {
+            category="QuesUnder18";
+        }else{
+            category="QuesAdult";
+        }
+        Intent intent = new Intent(getApplicationContext(),QuesAnsActivity.class);
+        intent.putExtra("category",category);
         startActivity(intent);
     }
 }
