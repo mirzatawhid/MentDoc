@@ -82,7 +82,8 @@
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/level" />
+        app:layout_constraintTop_toBottomOf="@+id/level"
+        android:onClick="ReferDoctor"/>
 
     <Button
         android:id="@+id/button2"
