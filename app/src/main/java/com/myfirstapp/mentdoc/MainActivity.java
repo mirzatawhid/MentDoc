@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -85,10 +86,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //            @Override
 //            public void onClick(View view) {
 //
-//                mAuth.signOut();
-//                Intent intent = new Intent(getApplicationContext(),Login.class);
-//                startActivity(intent);
-//                finish();
 //
 //            }
 //        });
@@ -108,10 +105,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-        switch (item.getItemId()){
-            case R.id.nav_home:
-                break;
-
+        int id = item.getItemId();
+        if (id == R.id.nav_share){
+            Toast.makeText(this, "Share button is clicked!", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.nav_profile) {
+            Intent intent = new Intent(getApplicationContext(),UserProfileActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_logout) {
+            mAuth.signOut();
+            Intent intent = new Intent(getApplicationContext(),Login.class);
+            startActivity(intent);
+            finish();
         }
 
         return true;
