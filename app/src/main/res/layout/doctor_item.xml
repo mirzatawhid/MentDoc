@@ -11,7 +11,7 @@
     android:background="@drawable/pick_background">
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/item_pic"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginStart="8dp"
@@ -23,7 +23,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/item_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -32,11 +32,11 @@
         android:textColor="#26273a"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/imageView5"
-        app:layout_constraintTop_toTopOf="@+id/imageView5" />
+        app:layout_constraintStart_toEndOf="@+id/item_pic"
+        app:layout_constraintTop_toTopOf="@+id/item_pic" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/item_position"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -44,34 +44,34 @@
         android:textColor="#26273a"
         android:textSize="16sp"
         android:text="Specialist,Mitford Hospital"
-        app:layout_constraintStart_toEndOf="@+id/imageView5"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintStart_toEndOf="@+id/item_pic"
+        app:layout_constraintTop_toBottomOf="@+id/item_name" />
 
     <ImageView
         android:id="@+id/imageView6"
         android:layout_width="18dp"
         android:layout_height="18dp"
         android:layout_marginStart="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView10"
-        app:layout_constraintStart_toEndOf="@+id/imageView5"
-        app:layout_constraintTop_toTopOf="@+id/textView10"
+        app:layout_constraintBottom_toBottomOf="@+id/item_timing"
+        app:layout_constraintStart_toEndOf="@+id/item_pic"
+        app:layout_constraintTop_toTopOf="@+id/item_timing"
         app:srcCompat="@drawable/clock" />
 
     <TextView
-        android:id="@+id/textView10"
+        android:id="@+id/item_timing"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="09:25 AM-13:30 PM"
+        android:text="09:25 AM-01:30 PM"
         android:textColor="#262731"
         android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/imageView6"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        app:layout_constraintTop_toBottomOf="@+id/item_position" />
 
     <TextView
-        android:id="@+id/textView12"
+        android:id="@+id/item_btn"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:layout_marginTop="8dp"
@@ -86,6 +86,6 @@
         android:paddingEnd="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+        app:layout_constraintTop_toBottomOf="@+id/item_timing" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
