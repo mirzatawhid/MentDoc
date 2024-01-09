@@ -38,7 +38,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:fontFamily="@font/montserrat"
-        android:hint="Username"
+        android:hint="Enter your Full Name"
         android:inputType="text"
         android:maxLines="1"
         android:paddingStart="20dp"
