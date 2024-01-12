@@ -1,6 +1,9 @@
 package com.myfirstapp.mentdoc;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +13,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.ViewHolder;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -42,6 +47,25 @@ public class DocAdapter extends RecyclerView.Adapter<DocAdapter.DocViewHolder> {
 
         Picasso.get().load(docDetails.getImage()).into(holder.docImage);
 
+        holder.btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final DialogPlus dialogPlus = DialogPlus.newDialog(holder.docName.getContext())
+                        .setContentHolder(new ViewHolder(R.layout.activity_confirm_booking))
+                        .setExpanded(true,1200)
+                        .create();
+                View view1 = dialogPlus.getHolderView();
+                TextView docName = view1.findViewById(R.id.doc_name);
+                TextView docPost = view1.findViewById(R.id.doc_post);
+                TextView docTiming = view1.findViewById(R.id.doc_timing);
+
+                docName.setText(docDetails.getName());
+                docPost.setText(docDetails.getPost());
+                docTiming.setText(docDetails.getTiming());
+                dialogPlus.show();
+            }
+        });
+
     }
 
     @Override
@@ -51,7 +75,7 @@ public class DocAdapter extends RecyclerView.Adapter<DocAdapter.DocViewHolder> {
 
     public static class DocViewHolder extends RecyclerView.ViewHolder {
 
-        TextView docName, docPost, docTiming;
+        TextView docName, docPost, docTiming,btn;
         ImageView docImage;
 
         public DocViewHolder(@NonNull View itemView) {
@@ -61,6 +85,10 @@ public class DocAdapter extends RecyclerView.Adapter<DocAdapter.DocViewHolder> {
             docPost = itemView.findViewById(R.id.item_position);
             docTiming = itemView.findViewById(R.id.item_timing);
             docImage = itemView.findViewById(R.id.item_pic);
+            btn = itemView.findViewById(R.id.item_btn);
+
+
+
 
         }
     }

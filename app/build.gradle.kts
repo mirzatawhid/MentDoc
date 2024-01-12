@@ -42,6 +42,7 @@ dependencies {
     implementation("com.google.firebase:firebase-storage:20.3.0")
 
     implementation("com.squareup.picasso:picasso:2.8")
+    implementation("com.orhanobut:dialogplus:1.11@aar")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
