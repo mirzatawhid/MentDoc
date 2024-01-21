@@ -15,6 +15,9 @@
         android:theme="@style/Theme.Mentdoc"
         tools:targetApi="31">
         <activity
+            android:name=".EditProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".ConfirmBookingActivity"
             android:exported="false" />
         <activity

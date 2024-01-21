@@ -3,8 +3,9 @@ package com.myfirstapp.mentdoc;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,7 +20,7 @@ public class UserProfileActivity extends AppCompatActivity {
     FirebaseFirestore firestore;
     String userId;
     FirebaseAuth mAuth;
-    TextView ageView,nameView,emailView;
+    TextView ageView,nameView,emailView,mblNumView,guardianNameView,guardianNumView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +30,10 @@ public class UserProfileActivity extends AppCompatActivity {
         ageView = findViewById(R.id.tv_age);
         nameView = findViewById(R.id.tv_name);
         emailView = findViewById(R.id.tv_email);
+        mblNumView = findViewById(R.id.tv_num);
+        guardianNameView = findViewById(R.id.tv_guardian_name);
+        guardianNumView = findViewById(R.id.tv_guardian_num);
+
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -43,8 +48,17 @@ public class UserProfileActivity extends AppCompatActivity {
                 nameView.setText(documentSnapshot.getString("full_name"));
                 ageView.setText(documentSnapshot.getString("age"));
                 emailView.setText(documentSnapshot.getString("email"));
+                mblNumView.setText(documentSnapshot.getString("mbl_num"));
+                guardianNumView.setText(documentSnapshot.getString("guardian_num"));
+                guardianNameView.setText(documentSnapshot.getString("guardian_name"));
             }
         });
 
+    }
+
+    public void goToEditProfile(View view) {
+        Intent intent = new Intent(getApplicationContext(), EditProfileActivity.class);
+        startActivity(intent);
+        finish();
     }
 }
