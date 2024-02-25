@@ -50,19 +50,24 @@ public class DocAdapter extends RecyclerView.Adapter<DocAdapter.DocViewHolder> {
         holder.btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final DialogPlus dialogPlus = DialogPlus.newDialog(holder.docName.getContext())
-                        .setContentHolder(new ViewHolder(R.layout.activity_confirm_booking))
-                        .setExpanded(true,1200)
-                        .create();
-                View view1 = dialogPlus.getHolderView();
-                TextView docName = view1.findViewById(R.id.doc_name);
-                TextView docPost = view1.findViewById(R.id.doc_post);
-                TextView docTiming = view1.findViewById(R.id.doc_timing);
+//                final DialogPlus dialogPlus = DialogPlus.newDialog(holder.docName.getContext())
+//                        .setContentHolder(new ViewHolder(R.layout.activity_confirm_booking))
+//                        .setExpanded(true,1200)
+//                        .create();
+//                View view1 = dialogPlus.getHolderView();
+//                TextView docName = view1.findViewById(R.id.doc_name);
+//                TextView docPost = view1.findViewById(R.id.doc_post);
+//                TextView docTiming = view1.findViewById(R.id.doc_timing);
+//
+//                docName.setText(docDetails.getName());
+//                docPost.setText(docDetails.getPost());
+//                docTiming.setText(docDetails.getTiming());
+//                dialogPlus.show();
 
-                docName.setText(docDetails.getName());
-                docPost.setText(docDetails.getPost());
-                docTiming.setText(docDetails.getTiming());
-                dialogPlus.show();
+                Intent intent = new Intent(context,ConfirmBookingActivity.class);
+                intent.putExtra("doc_details",docDetails);
+                context.startActivity(intent);
+
             }
         });
 
