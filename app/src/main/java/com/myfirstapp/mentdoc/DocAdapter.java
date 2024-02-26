@@ -2,6 +2,7 @@ package com.myfirstapp.mentdoc;
 
 import static androidx.core.content.ContextCompat.startActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -11,18 +12,31 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class DocAdapter extends RecyclerView.Adapter<DocAdapter.DocViewHolder> {
 
     Context context;
     ArrayList<docDetails> docDetailsArrayList;
+
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     public DocAdapter(Context context, ArrayList<docDetails> docDetailsArrayList) {
         this.context = context;
@@ -45,24 +59,31 @@ public class DocAdapter extends RecyclerView.Adapter<DocAdapter.DocViewHolder> {
         holder.docPost.setText(docDetails.getPost());
         holder.docTiming.setText(docDetails.getTiming());
 
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("users").document(mAuth.getCurrentUser().getUid()).collection("appointments")
+                        .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @SuppressLint("ResourceAsColor")
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                            // Access document data using document.getData()
+                            Map<String, Object> data = document.getData();
+                            if (document.get("doc_id").equals(docDetails.getId())){
+                                holder.btn.setClickable(false);
+                                holder.btn.setBackgroundResource(R.drawable.custom_btn_unavailable);
+                                holder.btn.setTextColor(R.color.black);
+                            }
+                        }
+                    }
+                });
+
+
         Picasso.get().load(docDetails.getImage()).into(holder.docImage);
 
         holder.btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                final DialogPlus dialogPlus = DialogPlus.newDialog(holder.docName.getContext())
-//                        .setContentHolder(new ViewHolder(R.layout.activity_confirm_booking))
-//                        .setExpanded(true,1200)
-//                        .create();
-//                View view1 = dialogPlus.getHolderView();
-//                TextView docName = view1.findViewById(R.id.doc_name);
-//                TextView docPost = view1.findViewById(R.id.doc_post);
-//                TextView docTiming = view1.findViewById(R.id.doc_timing);
-//
-//                docName.setText(docDetails.getName());
-//                docPost.setText(docDetails.getPost());
-//                docTiming.setText(docDetails.getTiming());
-//                dialogPlus.show();
 
                 Intent intent = new Intent(context,ConfirmBookingActivity.class);
                 intent.putExtra("doc_details",docDetails);

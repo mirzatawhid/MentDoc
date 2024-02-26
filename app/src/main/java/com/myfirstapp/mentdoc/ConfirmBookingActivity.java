@@ -3,9 +3,12 @@ package com.myfirstapp.mentdoc;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -14,8 +17,13 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -27,6 +35,7 @@ public class ConfirmBookingActivity extends AppCompatActivity {
     boolean programmaticChange = false;
 
     FirebaseAuth mAuth;
+    FirebaseFirestore firestore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +43,8 @@ public class ConfirmBookingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_confirm_booking);
 
         mAuth = FirebaseAuth.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String currentDate = sdf.format(new Date());
 
         docDetails docDetails = (com.myfirstapp.mentdoc.docDetails) getIntent().getSerializableExtra("doc_details");
 
@@ -60,10 +71,41 @@ public class ConfirmBookingActivity extends AppCompatActivity {
         RadioGroup radioGroup1 = findViewById(R.id.slot_group1);
         RadioGroup radioGroup2 = findViewById(R.id.slot_group2);
 
-// Flag to track if the change in checked state is programmatically triggered
+        DatabaseReference db = FirebaseDatabase.getInstance("https://mentdoc-da69c-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot childSnapshot : snapshot.child("appointments").child(currentDate).child(docDetails.getId()).getChildren()) {
+                    String childKey = childSnapshot.getKey();
+                    Log.d("slotNum", "onDataChange: "+childKey);
+                    if (childKey.equals("slot1")) {
+                        selectedRadioButton1.setEnabled(false);
+                        selectedRadioButton1.setBackgroundResource(R.drawable.custom_slot_unavailable);
+                    }else if (childKey.equals("slot2")){
+                        selectedRadioButton2.setEnabled(false);
+                        selectedRadioButton2.setBackgroundResource(R.drawable.custom_slot_unavailable);
+                    }else if (childKey.equals("slot3")){
+                        selectedRadioButton3.setEnabled(false);
+                        selectedRadioButton3.setBackgroundResource(R.drawable.custom_slot_unavailable);
+                    }else if (childKey.equals("slot4")){
+                        selectedRadioButton4.setEnabled(false);
+                        selectedRadioButton4.setBackgroundResource(R.drawable.custom_slot_unavailable);
+                    }else if (childKey.equals("slot5")){
+                        selectedRadioButton5.setEnabled(false);
+                        selectedRadioButton5.setBackgroundResource(R.drawable.custom_slot_unavailable);
+                    }else if (childKey.equals("slot6")){
+                        selectedRadioButton6.setEnabled(false);
+                        selectedRadioButton6.setBackgroundResource(R.drawable.custom_slot_unavailable);
+                    }
+                }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("slotNum", "onCancelled: Failed");
+            }
+        });
 
-// Set OnCheckedChangeListener for RadioButtons in the first RadioGroup
         radioGroup1.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -96,21 +138,14 @@ public class ConfirmBookingActivity extends AppCompatActivity {
         docPost.setText(docDetails.getPost());
         docTiming.setText(docDetails.getTiming());
 
+
+
+
         bookingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                int selectedRadioButtonId = radioGroup1.getCheckedRadioButtonId();
-//                RadioButton selectedRadioButton = findViewById(selectedRadioButtonId);
-//
-//                // If no RadioButton is selected, display a message and return
-//                if (selectedRadioButton == null) {
-//                    selectedRadioButtonId = radioGroup2.getCheckedRadioButtonId();
-//                    selectedRadioButton = findViewById(selectedRadioButtonId);
-//                    if (selectedRadioButton == null){
-//                        Toast.makeText(ConfirmBookingActivity.this, "Select an Slot.", Toast.LENGTH_SHORT).show();
-//                    }
-//                }
 
+                //saving data in realtime database
                 String selectedTimeSlot=null;
                 String selectedSlot = null;
                 
@@ -140,8 +175,7 @@ public class ConfirmBookingActivity extends AppCompatActivity {
                 Map<String,Object> appointmentData= new HashMap<>();
                 appointmentData.put("user_id",mAuth.getCurrentUser().getUid());
                 appointmentData.put("time",selectedTimeSlot);
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                String currentDate = sdf.format(new Date());
+
 
                 databaseReference.child("appointments").child(currentDate).child(docDetails.getId()).child(selectedSlot).setValue(appointmentData).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -156,6 +190,34 @@ public class ConfirmBookingActivity extends AppCompatActivity {
                     }
                 });
 
+                //saving data on user database
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                Map<String,Object> appointmentUserData= new HashMap<>();
+                appointmentUserData.put("date",currentDate);
+                appointmentUserData.put("doc_id",docDetails.getId());
+                appointmentUserData.put("slot",selectedSlot);
+
+                db.collection("users").document(mAuth.getCurrentUser().getUid()).collection("appointments")
+                        .add(appointmentUserData).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            @Override
+                            public void onSuccess(DocumentReference documentReference) {
+                                Log.d("appointmentData", "onSuccess: Appointment Data Stored Successfully!");
+                            }
+                        });
+
+            }
+        });
+
+
+
+        //back button functionality
+        ImageView backBtn = findViewById(R.id.bookingBackBtn);
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
 
