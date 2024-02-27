@@ -83,12 +83,13 @@ public class ConfirmBookingActivity extends AppCompatActivity {
                                 selectedRadioButton4.setEnabled(true);
                                 selectedRadioButton5.setEnabled(true);
                                 selectedRadioButton6.setEnabled(true);
-                                selectedRadioButton1.setBackgroundResource(R.drawable.custom_slot_normal);
-                                selectedRadioButton2.setBackgroundResource(R.drawable.custom_slot_normal);
-                                selectedRadioButton3.setBackgroundResource(R.drawable.custom_slot_normal);
-                                selectedRadioButton4.setBackgroundResource(R.drawable.custom_slot_normal);
-                                selectedRadioButton5.setBackgroundResource(R.drawable.custom_slot_normal);
-                                selectedRadioButton6.setBackgroundResource(R.drawable.custom_slot_normal);
+                                selectedRadioButton1.setBackgroundResource(R.drawable.custom_slot_selector);
+                                selectedRadioButton2.setBackgroundResource(R.drawable.custom_slot_selector);
+                                selectedRadioButton3.setBackgroundResource(R.drawable.custom_slot_selector);
+                                selectedRadioButton4.setBackgroundResource(R.drawable.custom_slot_selector);
+                                selectedRadioButton5.setBackgroundResource(R.drawable.custom_slot_selector);
+                                selectedRadioButton6.setBackgroundResource(R.drawable.custom_slot_selector);
+
                                 for (DataSnapshot childSnapshot : snapshot.child("appointments").child(dateEditText.getText().toString()).child(docDetails.getId()).getChildren()) {
                                     String childKey = childSnapshot.getKey();
                                     Log.d("slotNum", "onDataChange: " + childKey);
@@ -119,12 +120,12 @@ public class ConfirmBookingActivity extends AppCompatActivity {
                                         selectedRadioButton4.setEnabled(true);
                                         selectedRadioButton5.setEnabled(true);
                                         selectedRadioButton6.setEnabled(true);
-                                        selectedRadioButton1.setBackgroundResource(R.drawable.custom_slot_normal);
-                                        selectedRadioButton2.setBackgroundResource(R.drawable.custom_slot_normal);
-                                        selectedRadioButton3.setBackgroundResource(R.drawable.custom_slot_normal);
-                                        selectedRadioButton4.setBackgroundResource(R.drawable.custom_slot_normal);
-                                        selectedRadioButton5.setBackgroundResource(R.drawable.custom_slot_normal);
-                                        selectedRadioButton6.setBackgroundResource(R.drawable.custom_slot_normal);
+                                        selectedRadioButton1.setBackgroundResource(R.drawable.custom_slot_selector);
+                                        selectedRadioButton2.setBackgroundResource(R.drawable.custom_slot_selector);
+                                        selectedRadioButton3.setBackgroundResource(R.drawable.custom_slot_selector);
+                                        selectedRadioButton4.setBackgroundResource(R.drawable.custom_slot_selector);
+                                        selectedRadioButton5.setBackgroundResource(R.drawable.custom_slot_selector);
+                                        selectedRadioButton6.setBackgroundResource(R.drawable.custom_slot_selector);
                                     }
                                 }
                             }
