@@ -1,7 +1,5 @@
 package com.myfirstapp.mentdoc;
 
-import static androidx.core.content.ContextCompat.startActivity;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -12,20 +10,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.orhanobut.dialogplus.DialogPlus;
-import com.orhanobut.dialogplus.ViewHolder;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -58,6 +49,7 @@ public class DocAdapter extends RecyclerView.Adapter<DocAdapter.DocViewHolder> {
         holder.docName.setText(docDetails.getName());
         holder.docPost.setText(docDetails.getPost());
         holder.docTiming.setText(docDetails.getTiming());
+        holder.docRating.setText(docDetails.getRating());
 
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -101,18 +93,18 @@ public class DocAdapter extends RecyclerView.Adapter<DocAdapter.DocViewHolder> {
 
     public static class DocViewHolder extends RecyclerView.ViewHolder {
 
-        TextView docName, docPost, docTiming,btn;
+        TextView docName, docPost, docTiming,btn,docRating;
         ImageView docImage;
 
         public DocViewHolder(@NonNull View itemView) {
             super(itemView);
 
             docName = itemView.findViewById(R.id.item_name);
-            docPost = itemView.findViewById(R.id.item_position);
+            docPost = itemView.findViewById(R.id.item_date);
             docTiming = itemView.findViewById(R.id.item_timing);
             docImage = itemView.findViewById(R.id.item_pic);
             btn = itemView.findViewById(R.id.item_btn);
-
+            docRating = itemView.findViewById(R.id.item_rating);
 
 
 

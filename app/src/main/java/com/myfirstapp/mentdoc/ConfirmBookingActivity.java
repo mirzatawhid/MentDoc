@@ -3,11 +3,14 @@ package com.myfirstapp.mentdoc;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -26,6 +29,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,11 +40,35 @@ public class ConfirmBookingActivity extends AppCompatActivity {
 
     FirebaseAuth mAuth;
     FirebaseFirestore firestore;
+    final Calendar cal = Calendar.getInstance();
+
+    int mDate = cal.get(Calendar.DATE);
+    int mMonth = cal.get(Calendar.MONTH);
+    int mYear = cal.get(Calendar.YEAR);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_booking);
+
+        EditText dateEditText = findViewById(R.id.dateeditText);
+        ImageView dateImageView = findViewById(R.id.date_image);
+
+        dateEditText.setText(String.valueOf(mDate)+"-"+String.valueOf(mMonth+1)+"-"+String.valueOf(mYear));
+
+        dateImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(ConfirmBookingActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int month, int date) {
+                        dateEditText.setText(String.valueOf(date)+"-"+String.valueOf(month+1)+"-"+String.valueOf(year));
+                    }
+                },mYear,mMonth,mDate);
+                datePickerDialog.show();
+            }
+        });
 
         mAuth = FirebaseAuth.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -75,7 +103,7 @@ public class ConfirmBookingActivity extends AppCompatActivity {
         db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot childSnapshot : snapshot.child("appointments").child(currentDate).child(docDetails.getId()).getChildren()) {
+                for (DataSnapshot childSnapshot : snapshot.child("appointments").child(dateEditText.getText().toString()).child(docDetails.getId()).getChildren()) {
                     String childKey = childSnapshot.getKey();
                     Log.d("slotNum", "onDataChange: "+childKey);
                     if (childKey.equals("slot1")) {
@@ -177,7 +205,7 @@ public class ConfirmBookingActivity extends AppCompatActivity {
                 appointmentData.put("time",selectedTimeSlot);
 
 
-                databaseReference.child("appointments").child(currentDate).child(docDetails.getId()).child(selectedSlot).setValue(appointmentData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                databaseReference.child("appointments").child(dateEditText.getText().toString()).child(docDetails.getId()).child(selectedSlot).setValue(appointmentData).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
                         Toast.makeText(ConfirmBookingActivity.this, "Appointment Booked Successfully!", Toast.LENGTH_SHORT).show();
@@ -193,7 +221,7 @@ public class ConfirmBookingActivity extends AppCompatActivity {
                 //saving data on user database
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 Map<String,Object> appointmentUserData= new HashMap<>();
-                appointmentUserData.put("date",currentDate);
+                appointmentUserData.put("date",dateEditText.getText().toString());
                 appointmentUserData.put("doc_id",docDetails.getId());
                 appointmentUserData.put("slot",selectedSlot);
 

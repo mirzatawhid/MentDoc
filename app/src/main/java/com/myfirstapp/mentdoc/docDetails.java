@@ -6,6 +6,7 @@ public class docDetails implements Serializable {
     String id;
     String name,post,timing,image;
     String slot1,slot2,slot3,slot4,slot5,slot6;
+    String rating;
 
     public docDetails(String id, String name, String post, String timing, String image, String slot1, String slot2, String slot3, String slot4, String slot5, String slot6) {
         this.id = id;
@@ -19,6 +20,29 @@ public class docDetails implements Serializable {
         this.slot4 = slot4;
         this.slot5 = slot5;
         this.slot6 = slot6;
+    }
+
+    public docDetails(String id, String name, String post, String timing, String image, String slot1, String slot2, String slot3, String slot4, String slot5, String slot6, String rating) {
+        this.id = id;
+        this.name = name;
+        this.post = post;
+        this.timing = timing;
+        this.image = image;
+        this.slot1 = slot1;
+        this.slot2 = slot2;
+        this.slot3 = slot3;
+        this.slot4 = slot4;
+        this.slot5 = slot5;
+        this.slot6 = slot6;
+        this.rating = rating;
+    }
+
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
     }
 
     public String getId() {
