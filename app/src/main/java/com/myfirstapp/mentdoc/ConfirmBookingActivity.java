@@ -51,7 +51,16 @@ public class ConfirmBookingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_booking);
 
-        EditText dateEditText = findViewById(R.id.dateeditText);
+        docDetails docDetails = (com.myfirstapp.mentdoc.docDetails) getIntent().getSerializableExtra("doc_details");
+
+        RadioButton selectedRadioButton1 = findViewById(R.id.slot1_id);
+        RadioButton selectedRadioButton2 = findViewById(R.id.slot2_id);
+        RadioButton selectedRadioButton3 = findViewById(R.id.slot3_id);
+        RadioButton selectedRadioButton4 = findViewById(R.id.slot4_id);
+        RadioButton selectedRadioButton5 = findViewById(R.id.slot5_id);
+        RadioButton selectedRadioButton6 = findViewById(R.id.slot6_id);
+
+        TextView dateEditText = findViewById(R.id.dateeditText);
         ImageView dateImageView = findViewById(R.id.date_image);
 
         dateEditText.setText(String.valueOf(mDate)+"-"+String.valueOf(mMonth+1)+"-"+String.valueOf(mYear));
@@ -64,6 +73,67 @@ public class ConfirmBookingActivity extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int month, int date) {
                         dateEditText.setText(String.valueOf(date)+"-"+String.valueOf(month+1)+"-"+String.valueOf(year));
+                        DatabaseReference db = FirebaseDatabase.getInstance("https://mentdoc-da69c-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
+                        db.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                selectedRadioButton1.setEnabled(true);
+                                selectedRadioButton2.setEnabled(true);
+                                selectedRadioButton3.setEnabled(true);
+                                selectedRadioButton4.setEnabled(true);
+                                selectedRadioButton5.setEnabled(true);
+                                selectedRadioButton6.setEnabled(true);
+                                selectedRadioButton1.setBackgroundResource(R.drawable.custom_slot_normal);
+                                selectedRadioButton2.setBackgroundResource(R.drawable.custom_slot_normal);
+                                selectedRadioButton3.setBackgroundResource(R.drawable.custom_slot_normal);
+                                selectedRadioButton4.setBackgroundResource(R.drawable.custom_slot_normal);
+                                selectedRadioButton5.setBackgroundResource(R.drawable.custom_slot_normal);
+                                selectedRadioButton6.setBackgroundResource(R.drawable.custom_slot_normal);
+                                for (DataSnapshot childSnapshot : snapshot.child("appointments").child(dateEditText.getText().toString()).child(docDetails.getId()).getChildren()) {
+                                    String childKey = childSnapshot.getKey();
+                                    Log.d("slotNum", "onDataChange: " + childKey);
+                                    if (childSnapshot.exists()) {
+                                        if (childKey.equals("slot1")) {
+                                            selectedRadioButton1.setEnabled(false);
+                                            selectedRadioButton1.setBackgroundResource(R.drawable.custom_slot_unavailable);
+                                        } else if (childKey.equals("slot2")) {
+                                            selectedRadioButton2.setEnabled(false);
+                                            selectedRadioButton2.setBackgroundResource(R.drawable.custom_slot_unavailable);
+                                        } else if (childKey.equals("slot3")) {
+                                            selectedRadioButton3.setEnabled(false);
+                                            selectedRadioButton3.setBackgroundResource(R.drawable.custom_slot_unavailable);
+                                        } else if (childKey.equals("slot4")) {
+                                            selectedRadioButton4.setEnabled(false);
+                                            selectedRadioButton4.setBackgroundResource(R.drawable.custom_slot_unavailable);
+                                        } else if (childKey.equals("slot5")) {
+                                            selectedRadioButton5.setEnabled(false);
+                                            selectedRadioButton5.setBackgroundResource(R.drawable.custom_slot_unavailable);
+                                        } else if (childKey.equals("slot6")) {
+                                            selectedRadioButton6.setEnabled(false);
+                                            selectedRadioButton6.setBackgroundResource(R.drawable.custom_slot_unavailable);
+                                        }
+                                    }else{
+                                        selectedRadioButton1.setEnabled(true);
+                                        selectedRadioButton2.setEnabled(true);
+                                        selectedRadioButton3.setEnabled(true);
+                                        selectedRadioButton4.setEnabled(true);
+                                        selectedRadioButton5.setEnabled(true);
+                                        selectedRadioButton6.setEnabled(true);
+                                        selectedRadioButton1.setBackgroundResource(R.drawable.custom_slot_normal);
+                                        selectedRadioButton2.setBackgroundResource(R.drawable.custom_slot_normal);
+                                        selectedRadioButton3.setBackgroundResource(R.drawable.custom_slot_normal);
+                                        selectedRadioButton4.setBackgroundResource(R.drawable.custom_slot_normal);
+                                        selectedRadioButton5.setBackgroundResource(R.drawable.custom_slot_normal);
+                                        selectedRadioButton6.setBackgroundResource(R.drawable.custom_slot_normal);
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                Log.d("slotNum", "onCancelled: Failed");
+                            }
+                        });
                     }
                 },mYear,mMonth,mDate);
                 datePickerDialog.show();
@@ -71,10 +141,6 @@ public class ConfirmBookingActivity extends AppCompatActivity {
         });
 
         mAuth = FirebaseAuth.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String currentDate = sdf.format(new Date());
-
-        docDetails docDetails = (com.myfirstapp.mentdoc.docDetails) getIntent().getSerializableExtra("doc_details");
 
         TextView docName = findViewById(R.id.doc_name);
         TextView docPost = findViewById(R.id.doc_post);
@@ -82,12 +148,6 @@ public class ConfirmBookingActivity extends AppCompatActivity {
 
         Button bookingBtn = findViewById(R.id.bookingBtn);
 
-        RadioButton selectedRadioButton1 = findViewById(R.id.slot1_id);
-        RadioButton selectedRadioButton2 = findViewById(R.id.slot2_id);
-        RadioButton selectedRadioButton3 = findViewById(R.id.slot3_id);
-        RadioButton selectedRadioButton4 = findViewById(R.id.slot4_id);
-        RadioButton selectedRadioButton5 = findViewById(R.id.slot5_id);
-        RadioButton selectedRadioButton6 = findViewById(R.id.slot6_id);
 
         selectedRadioButton1.setText("Slot-1\n"+docDetails.getSlot1());
         selectedRadioButton2.setText("Slot-2\n"+docDetails.getSlot2());
@@ -99,40 +159,40 @@ public class ConfirmBookingActivity extends AppCompatActivity {
         RadioGroup radioGroup1 = findViewById(R.id.slot_group1);
         RadioGroup radioGroup2 = findViewById(R.id.slot_group2);
 
-        DatabaseReference db = FirebaseDatabase.getInstance("https://mentdoc-da69c-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
-        db.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot childSnapshot : snapshot.child("appointments").child(dateEditText.getText().toString()).child(docDetails.getId()).getChildren()) {
-                    String childKey = childSnapshot.getKey();
-                    Log.d("slotNum", "onDataChange: "+childKey);
-                    if (childKey.equals("slot1")) {
-                        selectedRadioButton1.setEnabled(false);
-                        selectedRadioButton1.setBackgroundResource(R.drawable.custom_slot_unavailable);
-                    }else if (childKey.equals("slot2")){
-                        selectedRadioButton2.setEnabled(false);
-                        selectedRadioButton2.setBackgroundResource(R.drawable.custom_slot_unavailable);
-                    }else if (childKey.equals("slot3")){
-                        selectedRadioButton3.setEnabled(false);
-                        selectedRadioButton3.setBackgroundResource(R.drawable.custom_slot_unavailable);
-                    }else if (childKey.equals("slot4")){
-                        selectedRadioButton4.setEnabled(false);
-                        selectedRadioButton4.setBackgroundResource(R.drawable.custom_slot_unavailable);
-                    }else if (childKey.equals("slot5")){
-                        selectedRadioButton5.setEnabled(false);
-                        selectedRadioButton5.setBackgroundResource(R.drawable.custom_slot_unavailable);
-                    }else if (childKey.equals("slot6")){
-                        selectedRadioButton6.setEnabled(false);
-                        selectedRadioButton6.setBackgroundResource(R.drawable.custom_slot_unavailable);
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.d("slotNum", "onCancelled: Failed");
-            }
-        });
+//        DatabaseReference db = FirebaseDatabase.getInstance("https://mentdoc-da69c-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
+//        db.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                for (DataSnapshot childSnapshot : snapshot.child("appointments").child(dateEditText.getText().toString()).child(docDetails.getId()).getChildren()) {
+//                    String childKey = childSnapshot.getKey();
+//                    Log.d("slotNum", "onDataChange: "+childKey);
+//                    if (childKey.equals("slot1")) {
+//                        selectedRadioButton1.setEnabled(false);
+//                        selectedRadioButton1.setBackgroundResource(R.drawable.custom_slot_unavailable);
+//                    }else if (childKey.equals("slot2")){
+//                        selectedRadioButton2.setEnabled(false);
+//                        selectedRadioButton2.setBackgroundResource(R.drawable.custom_slot_unavailable);
+//                    }else if (childKey.equals("slot3")){
+//                        selectedRadioButton3.setEnabled(false);
+//                        selectedRadioButton3.setBackgroundResource(R.drawable.custom_slot_unavailable);
+//                    }else if (childKey.equals("slot4")){
+//                        selectedRadioButton4.setEnabled(false);
+//                        selectedRadioButton4.setBackgroundResource(R.drawable.custom_slot_unavailable);
+//                    }else if (childKey.equals("slot5")){
+//                        selectedRadioButton5.setEnabled(false);
+//                        selectedRadioButton5.setBackgroundResource(R.drawable.custom_slot_unavailable);
+//                    }else if (childKey.equals("slot6")){
+//                        selectedRadioButton6.setEnabled(false);
+//                        selectedRadioButton6.setBackgroundResource(R.drawable.custom_slot_unavailable);
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                Log.d("slotNum", "onCancelled: Failed");
+//            }
+//        });
 
         radioGroup1.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override

@@ -11,7 +11,7 @@
             android:title="User Profile"
             android:icon="@drawable/profile"/>
         <item
-            android:id="@+id/nav_analytics"
+            android:id="@+id/nav_appointmentList"
             android:title="Appointments List"
             android:icon="@drawable/ic_list"/>
         <item
