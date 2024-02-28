@@ -25,7 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Register extends AppCompatActivity {
-    EditText email,username,password,confirmPassword,age;
+    EditText email,username,password,confirmPassword,age,mblNum,guardianName,guardianNum;
     FirebaseAuth mAuth;
     FirebaseFirestore firestore;
     String userID;
@@ -42,7 +42,11 @@ public class Register extends AppCompatActivity {
         username = findViewById(R.id.uname);
         confirmPassword = findViewById(R.id.conpassword);
         age = findViewById(R.id.age);
+        mblNum = findViewById(R.id.reg_mbl_num);
+        guardianName = findViewById(R.id.reg_guardian_name);
+        guardianNum = findViewById(R.id.reg_guardian_num);
         Button btnReg = findViewById(R.id.btnReg);
+
 
         btnReg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,6 +56,10 @@ public class Register extends AppCompatActivity {
                 String dPassword =  String.valueOf(password.getText());
                 String dConfirmPassword =  String.valueOf(confirmPassword.getText());
                 String dAge =  String.valueOf(age.getText());
+                String dNum =  String.valueOf(mblNum.getText());
+                String dGuardianName =  String.valueOf(guardianName.getText());
+                String dGuardianNum =  String.valueOf(guardianNum.getText());
+                int i = Integer.parseInt(dAge);
 
                 if (TextUtils.isEmpty(dEmail)) {
                     Toast.makeText(getApplicationContext(), "Enter email address.", Toast.LENGTH_SHORT).show();
@@ -73,6 +81,16 @@ public class Register extends AppCompatActivity {
                     return;
                 }
 
+                if (dNum.length()!=11) {
+                    Toast.makeText(getApplicationContext(), "Enter the Appropiate Mobile Number", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (dGuardianNum.length()!=11) {
+                    Toast.makeText(getApplicationContext(), "Enter the Appropiate Guardian/ Friend's Mobile Number", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 mAuth.createUserWithEmailAndPassword(dEmail, dPassword)
                         .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
                             @Override
@@ -85,6 +103,9 @@ public class Register extends AppCompatActivity {
                                     user.put("full_name",dUsername);
                                     user.put("email",dEmail);
                                     user.put("age",dAge);
+                                    user.put("mbl_num",dNum);
+                                    user.put("guardian_name",dGuardianName);
+                                    user.put("guardian_num",dGuardianNum);
                                     documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void unused) {

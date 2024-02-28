@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UserProfileActivity">
+    tools:context=".EditProfileActivity">
 
     <RelativeLayout
         android:id="@+id/rellay1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/gred"
+        android:background="@drawable/gred2"
         android:paddingBottom="20dp">
 
         <RelativeLayout
@@ -36,8 +36,8 @@
 
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/tv_name"
+        <EditText
+            android:id="@+id/edit_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/imgUser"
@@ -46,14 +46,15 @@
             android:fontFamily="sans-serif-light"
             android:text="Joey Tribbiani"
             android:textColor="@color/white"
-            android:textSize="32sp" />
+            android:textSize="32sp"
+            android:background="@android:color/transparent"/>
 
 
         <TextView
-            android:id="@+id/tv_email"
+            android:id="@+id/edit_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_name"
+            android:layout_below="@+id/edit_name"
             android:layout_centerHorizontal="true"
             android:fontFamily="sans-serif"
             android:text="new york, usa"
@@ -62,15 +63,15 @@
             android:textSize="14sp" />
 
         <ImageView
+            android:id="@+id/btn_ok"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="15dp"
             android:layout_marginTop="15dp"
+            android:layout_marginRight="15dp"
             android:adjustViewBounds="true"
             android:scaleType="centerInside"
-            android:src="@drawable/ic_setting"
-            android:onClick="goToEditProfile"/>
+            android:src="@drawable/ic_tick" />
 
     </RelativeLayout>
 
@@ -81,79 +82,79 @@
         android:layout_below="@id/rellay1"
         android:orientation="horizontal">
 
-<!--        <RelativeLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_gravity="center"-->
-<!--            android:layout_weight="1"-->
-<!--            android:background="@color/followersBg"-->
-<!--            android:gravity="center"-->
-<!--            android:paddingBottom="5dp"-->
-<!--            android:paddingTop="5dp">-->
+        <!--        <RelativeLayout-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_gravity="center"-->
+        <!--            android:layout_weight="1"-->
+        <!--            android:background="@color/followersBg"-->
+        <!--            android:gravity="center"-->
+        <!--            android:paddingBottom="5dp"-->
+        <!--            android:paddingTop="5dp">-->
 
-<!--            <LinearLayout-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:gravity="center_horizontal"-->
-<!--                android:orientation="vertical">-->
+        <!--            <LinearLayout-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:gravity="center_horizontal"-->
+        <!--                android:orientation="vertical">-->
 
-<!--                <TextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:fontFamily="sans-serif-light"-->
-<!--                    android:text="453K"-->
-<!--                    android:textColor="@color/white"-->
-<!--                    android:textSize="25sp" />-->
+        <!--                <TextView-->
+        <!--                    android:layout_width="wrap_content"-->
+        <!--                    android:layout_height="wrap_content"-->
+        <!--                    android:fontFamily="sans-serif-light"-->
+        <!--                    android:text="453K"-->
+        <!--                    android:textColor="@color/white"-->
+        <!--                    android:textSize="25sp" />-->
 
-<!--                <TextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:fontFamily="sans-serif-light"-->
-<!--                    android:text="followers"-->
-<!--                    android:textAllCaps="true"-->
-<!--                    android:textColor="@color/white"-->
-<!--                    android:textSize="13sp" />-->
+        <!--                <TextView-->
+        <!--                    android:layout_width="wrap_content"-->
+        <!--                    android:layout_height="wrap_content"-->
+        <!--                    android:fontFamily="sans-serif-light"-->
+        <!--                    android:text="followers"-->
+        <!--                    android:textAllCaps="true"-->
+        <!--                    android:textColor="@color/white"-->
+        <!--                    android:textSize="13sp" />-->
 
-<!--            </LinearLayout>-->
+        <!--            </LinearLayout>-->
 
-<!--        </RelativeLayout>-->
+        <!--        </RelativeLayout>-->
 
-<!--        <RelativeLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_gravity="center"-->
-<!--            android:layout_weight="1"-->
-<!--            android:background="@color/followingBg"-->
-<!--            android:gravity="center"-->
-<!--            android:paddingBottom="5dp"-->
-<!--            android:paddingTop="5dp">-->
+        <!--        <RelativeLayout-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_gravity="center"-->
+        <!--            android:layout_weight="1"-->
+        <!--            android:background="@color/followingBg"-->
+        <!--            android:gravity="center"-->
+        <!--            android:paddingBottom="5dp"-->
+        <!--            android:paddingTop="5dp">-->
 
-<!--            <LinearLayout-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:gravity="center_horizontal"-->
-<!--                android:orientation="vertical">-->
+        <!--            <LinearLayout-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:gravity="center_horizontal"-->
+        <!--                android:orientation="vertical">-->
 
-<!--                <TextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:fontFamily="sans-serif-light"-->
-<!--                    android:text="873"-->
-<!--                    android:textColor="@color/white"-->
-<!--                    android:textSize="25sp" />-->
+        <!--                <TextView-->
+        <!--                    android:layout_width="wrap_content"-->
+        <!--                    android:layout_height="wrap_content"-->
+        <!--                    android:fontFamily="sans-serif-light"-->
+        <!--                    android:text="873"-->
+        <!--                    android:textColor="@color/white"-->
+        <!--                    android:textSize="25sp" />-->
 
-<!--                <TextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:fontFamily="sans-serif-light"-->
-<!--                    android:text="following"-->
-<!--                    android:textAllCaps="true"-->
-<!--                    android:textColor="@color/white"-->
-<!--                    android:textSize="13sp" />-->
+        <!--                <TextView-->
+        <!--                    android:layout_width="wrap_content"-->
+        <!--                    android:layout_height="wrap_content"-->
+        <!--                    android:fontFamily="sans-serif-light"-->
+        <!--                    android:text="following"-->
+        <!--                    android:textAllCaps="true"-->
+        <!--                    android:textColor="@color/white"-->
+        <!--                    android:textSize="13sp" />-->
 
-<!--            </LinearLayout>-->
+        <!--            </LinearLayout>-->
 
-<!--        </RelativeLayout>-->
+        <!--        </RelativeLayout>-->
 
     </LinearLayout>
 
@@ -184,14 +185,15 @@
                     android:textColor="@color/headings"
                     android:textSize="13sp" />
 
-                <TextView
-                    android:id="@+id/tv_age"
-                    android:layout_width="wrap_content"
+                <EditText
+                    android:id="@+id/edit_age"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
                     android:text="00"
                     android:textColor="#000000"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:background="@android:color/transparent"/>
 
                 <View
                     android:layout_width="match_parent"
@@ -214,10 +216,11 @@
                     android:textColor="@color/headings"
                     android:textSize="13sp" />
 
-                <TextView
-                    android:id="@+id/tv_num"
-                    android:layout_width="wrap_content"
+                <EditText
+                    android:id="@+id/edit_mbl"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
                     android:fontFamily="sans-serif-light"
                     android:text=""
                     android:textColor="#000000"
@@ -244,10 +247,11 @@
                     android:textColor="@color/headings"
                     android:textSize="13sp" />
 
-                <TextView
-                    android:id="@+id/tv_guardian_name"
-                    android:layout_width="wrap_content"
+                <EditText
+                    android:id="@+id/edit_guardian"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
                     android:fontFamily="sans-serif-light"
                     android:text=""
                     android:textColor="#000000"
@@ -274,10 +278,11 @@
                     android:textColor="@color/headings"
                     android:textSize="13sp" />
 
-                <TextView
-                    android:id="@+id/tv_guardian_num"
-                    android:layout_width="wrap_content"
+                <EditText
+                    android:id="@+id/edit_guardian_num"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
                     android:fontFamily="sans-serif-light"
                     android:text=""
                     android:textColor="#000000"

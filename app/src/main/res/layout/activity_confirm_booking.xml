@@ -47,6 +47,9 @@
         app:layout_constraintTop_toBottomOf="@+id/bookingView">
 
 
+
+
+
         <TextView
             android:id="@+id/doc_name"
             android:layout_width="wrap_content"
@@ -85,12 +88,102 @@
             app:layout_constraintTop_toBottomOf="@+id/doc_post" />
     </LinearLayout>
 
+    <RadioGroup
+        android:id="@+id/slot_group1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView">
+
+
+        <RadioButton
+            android:id="@+id/slot1_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/custom_slot_selector"
+            android:button="@android:color/transparent"
+            android:padding="10dp"
+            android:text="Slot-1\nTime"
+            android:textAlignment="center" />
+
+        <RadioButton
+            android:id="@+id/slot2_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/custom_slot_selector"
+            android:button="@android:color/transparent"
+            android:padding="10dp"
+            android:text="Slot-2\nTime"
+            android:textAlignment="center" />
+
+        <RadioButton
+            android:id="@+id/slot3_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/custom_slot_selector"
+            android:button="@android:color/transparent"
+            android:padding="10dp"
+            android:text="Slot-3\nTime"
+            android:textAlignment="center" />
+    </RadioGroup>
+
+    <RadioGroup
+        android:id="@+id/slot_group2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/slot_group1">
+
+        <RadioButton
+            android:id="@+id/slot4_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/custom_slot_selector"
+            android:button="@android:color/transparent"
+            android:padding="10dp"
+            android:text="Slot-4\nTime"
+            android:textAlignment="center" />
+
+        <RadioButton
+            android:id="@+id/slot5_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/custom_slot_selector"
+            android:button="@android:color/transparent"
+            android:padding="10dp"
+            android:text="Slot-5\nTime"
+            android:textAlignment="center" />
+
+        <RadioButton
+            android:id="@+id/slot6_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/custom_slot_selector"
+            android:button="@android:color/transparent"
+            android:padding="10dp"
+            android:text="Slot-6\nTime"
+            android:textAlignment="center" />
+
+    </RadioGroup>
+
     <Button
         android:id="@+id/bookingBtn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
         android:backgroundTint="@color/black"
         android:text="Confirm"
@@ -98,19 +191,41 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/booking_serial" />
+        app:layout_constraintTop_toBottomOf="@+id/slot_group2" />
 
     <TextView
-        android:id="@+id/booking_serial"
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
-        android:text="00"
-        android:textSize="60sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="Select Date:"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
+    <TextView
+        android:id="@+id/dateeditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:background="@android:color/transparent"
+        android:inputType="text"
+        android:text="DD-MM-YYYY"
+        app:layout_constraintBottom_toBottomOf="@+id/textView"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toTopOf="@+id/textView" />
+
+    <ImageView
+        android:id="@+id/date_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/dateeditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/dateeditText"
+        app:layout_constraintTop_toTopOf="@+id/dateeditText"
+        android:src="@drawable/calendar"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

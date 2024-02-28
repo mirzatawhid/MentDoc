@@ -122,19 +122,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 docList.clear();
                 for (DataSnapshot dataSnapshot : snapshot.child("DocDetails").getChildren()) {
 
+                    String getId = dataSnapshot.getKey();
                     String getName = dataSnapshot.child("name").getValue(String.class);
                     String getPost = dataSnapshot.child("post").getValue(String.class);
                     String getTiming = dataSnapshot.child("timing").getValue(String.class);
                     String getImage = dataSnapshot.child("image").getValue(String.class);
+                    String getSlot1 = dataSnapshot.child("slot1").getValue(String.class);
+                    String getSlot2 = dataSnapshot.child("slot2").getValue(String.class);
+                    String getSlot3 = dataSnapshot.child("slot3").getValue(String.class);
+                    String getSlot4 = dataSnapshot.child("slot4").getValue(String.class);
+                    String getSlot5 = dataSnapshot.child("slot5").getValue(String.class);
+                    String getSlot6 = dataSnapshot.child("slot6").getValue(String.class);
+                    String rating = dataSnapshot.child("rating").getValue(String.class);
 
 
-                    docDetails details = new docDetails(getName, getPost, getTiming, getImage);
+                    docDetails details = new docDetails(getId,getName, getPost, getTiming, getImage,getSlot1,getSlot2,getSlot3,getSlot4,getSlot5,getSlot6,rating);
                     Log.d("docname", "onDataChange: Added"+getName);
                     docList.add(details);
 
 
                 }
-//                Collections.reverse(cowList);
+
                 docAdapter.notifyDataSetChanged();
 
             }
@@ -206,6 +214,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_profile) {
             Intent intent = new Intent(getApplicationContext(),UserProfileActivity.class);
             startActivity(intent);
+        }else if (id == R.id.nav_appointmentList) {
+            Intent intent = new Intent(getApplicationContext(),AppointmentListActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_logout) {
             mAuth.signOut();
             Intent intent = new Intent(getApplicationContext(),Login.class);
@@ -232,6 +243,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         Intent intent = new Intent(getApplicationContext(),QuesAnsActivity.class);
         intent.putExtra("category",category);
+        startActivity(intent);
+    }
+
+    public void goToAdvice(View view) {
+        Intent intent = new Intent(getApplicationContext(),AdviceActivity.class);
+        startActivity(intent);
+    }
+
+    public void goToAppointmentList(View view) {
+        Intent intent = new Intent(getApplicationContext(),AppointmentListActivity.class);
+        intent.putExtra("docList",docList);
         startActivity(intent);
     }
 }

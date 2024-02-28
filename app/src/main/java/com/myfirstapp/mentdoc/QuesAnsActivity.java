@@ -184,8 +184,10 @@ public class QuesAnsActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(),ResultActivity.class);
             intent.putExtra("score",getMentalScore());
 
-            if (ageCategory == "QuesUnder18"){
+            if (ageCategory.equals("QuesUnder18")){
                 intent.putExtra("age","Teenager");
+            }else if(ageCategory.equals("QuesAdult")){
+                intent.putExtra("age","Adult");
             }else {
                 intent.putExtra("age","Child");
             }
@@ -198,15 +200,15 @@ public class QuesAnsActivity extends AppCompatActivity {
     private double getMentalScore(){
         int score = 0;
         for (int i = 0;i<questionBank.size();i++){
-            if (questionBank.get(i).getSelectedByUser()=="A"){
+            if (questionBank.get(i).getSelectedByUser().equals("A")){
                 score+=questionBank.get(i).getPointA();
-            } else if (questionBank.get(i).getSelectedByUser()=="B") {
+            } else if (questionBank.get(i).getSelectedByUser().equals("B")) {
                 score+=questionBank.get(i).getPointB();
             }else{
                 score+=questionBank.get(i).getPointC();
             }
         }
-        return (score*100)/(3*questionBank.size());
+        return (double) (score * 100) /(3*questionBank.size());
     }
 
 }
