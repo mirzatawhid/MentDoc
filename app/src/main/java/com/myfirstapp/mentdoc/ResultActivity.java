@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -28,12 +29,13 @@ public class ResultActivity extends AppCompatActivity {
             btnRefer.setText("Guardian Alerts");
         }
 
+        Log.d("mental", "onCreate: "+mentalScore);
 
 
-        if (mentalScore >70){
-            level.setText("bad");
+        if (mentalScore >= 65){
+            level.setText("Bad");
             level.setTextColor(Color.RED);
-        }else if(mentalScore < 71 && mentalScore > 40){
+        }else if(mentalScore < 65 && mentalScore > 40){
             level.setText("Medium");
             level.setTextColor(Color.BLACK);
         }else{
