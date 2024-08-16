@@ -31,6 +31,12 @@ Our system features a clean, flexible UI and includes a comprehensive set of psy
 - **Appointment booking:** Easily schedule sessions with psychiatrists.
 - **User profiling:** Ensures assessments and personalized updates to the user dashboard.
 
+## Aplication Demo:
+
+https://github.com/user-attachments/assets/9f969ed7-f0f4-40c7-8a5f-090057670e2d
+
+
+
 # Architecture 
 ## User Activity Diagram
 <img src="https://github.com/mirzatawhid/MentDoc/blob/62d461d34e960c16c220bc9ccfd0e834d67878bd/Screenshot/user_activity_diagram.png" alt="User Activity Diagram "  >
